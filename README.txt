@@ -112,3 +112,48 @@ LAST:
 		]
 	]
 }
+
+{ok,[
+		[
+			{calc,2,
+				{calc,1,"queen"},{oper,1,"-"},{calc,1,"mj"}
+			},
+      		[
+      			[
+      				{oper,1,"+"}
+      			],
+       			{calc,2,
+       				{calc,1,"pink"},{oper,1,"-"},{calc,1,"floyd"}
+       			}
+       		]
+       	]
+	]
+}
+
+{ok,[
+		[
+			{calc,2,
+				{calc,1,"queen"},{oper,1,"-"},{calc,1,"mj"}
+			},
+      		[
+      			{oper,1,"+"},
+       			{calc,2,
+       				{calc,1,"pink"},{oper,1,"-"},{calc,1,"floyd"}
+       			}
+       		]
+       	]
+	]
+}
+
+{ok,[
+		[
+			{calc,2,
+				{calc,1,"queen"},{oper,1,"-"},{calc,1,"mj"}
+			},
+   			{oper,1,"+"}|
+   			{calc,2,
+   				{calc,1,"pink"},{oper,1,"-"},{calc,1,"floyd"}
+   			}
+   		]
+   	]
+   }
