@@ -157,3 +157,26 @@ LAST:
    		]
    	]
    }
+
+((queen-mj)+(pink-floyd))
+
+{calc, {calc}, {op}, {calc}}
+
+{calc, 1 {
+	{calc, {calc, 1, "queen"},{oper,1,"-"},{calc,1,"mj"}},
+	{oper, 1, "+"}
+	{calc, {calc, 1, "pink"}, {oper,1,"-"},{calc,1,"floyd"}}
+}
+
+{ok,[
+		[
+			[
+				{calc,1,"queen"},{oper,1,"-"},{calc,1,"mj"}
+			],
+      		[
+      			{oper,1,"+"}, {calc,1,"pink"}, {oper,1,"-"},
+       			{calc,1,"floyd"}
+       		]
+       	]
+	]
+}

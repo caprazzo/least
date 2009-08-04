@@ -10,21 +10,27 @@ Rootsymbol list.
 %element -> oper : '$1'.
 
 list -> '(' list ')' :
-	log("list->(list)",['$1','$2','$3'], '$2').
+	log("list->(list)",['$1','$2','$3'], {calc, 5, '$2'}).
 
 list -> element :
-	log("list->element",['$1'], '$1').
+	log("list->element", ['$1'], '$1').
+
+list -> element list:
+	log("list->element list", ['$1','$2'], ['$1'|'$2']).
+
+%list -> element element list:
+%	log("list->element list", ['$1','$2','$3'],['$1','$2','$3']).
 
 list -> list list :
-	log("list->list list",[ '$1' , '$2' ],['$1','$2']).
+	log("list->list list", ['$1','$2'], ['$1','$2']).
 
 element -> calc : '$1'.
 element -> oper : '$1'.
 
-list -> '(' element element element ')' :
-	R = {calc, 2, min('$2'), min('$3'), min('$4')},
-	log("list->(c o c)",['$1','$2','$3','$4','$5'], R),
-	R.
+%list -> '(' element element element ')' :
+%	R = {calc, 2, min('$2'), min('$3'), min('$4')},
+%	log("list->(c o c)",['$1','$2','$3','$4','$5'], R),
+%	R.
 
 %list -> calc oper calc :
 %	R = {calc, 2, min('$1'), min('$2'), min('$3')},
@@ -42,6 +48,8 @@ log(Desc, In, Out) ->
 	io:format("~p ~p -->~n \t ~p~n--------------~n",[Desc, In, Out]),
 	Out.
 
+swrap([{calc,_,_}=C1,{oper,_,_}=O,{calc,_,_}=C2]) ->
+	{calc, 1, C1, O, C2}.
 
 
 
