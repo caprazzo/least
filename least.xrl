@@ -16,18 +16,16 @@ Rules.
 
 ({Char}({All})*{Char}) : {token, {calc, YYline, YYtext}}.
 ({Oper}) : {token, {oper, YYline, YYtext}}.
-%% ({Char}*) : {token, {author, YYline, YYtext}}.
-
 
 %% string
 
 {STRING} : 		%% Strip quotes.
 			S = lists:sublist(YYtext, 2, length(YYtext) - 2),
-			{token,{author,YYline,string_gen(S)}}.
+			{token,{calc,YYline,string_gen(S)}}.
 
 {QUOTE} : 		%% Strip quotes.
 			S = lists:sublist(YYtext, 2, length(YYtext) - 2),
-			{token,{author,YYline,string_gen(S)}}.
+			{token,{calc,YYline,string_gen(S)}}.
 
 
 {COMMENT} : .	

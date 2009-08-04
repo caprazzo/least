@@ -667,11 +667,11 @@ yyaction(1, YYlen, YYtcs, YYline) ->
 yyaction(2, YYlen, YYtcs, YYline) ->
     YYtext = yypre(YYtcs, YYlen),
     S = lists:sublist(YYtext, 2, length(YYtext) - 2),
-    {token,{author,YYline,string_gen(S)}};
+    {token,{calc,YYline,string_gen(S)}};
 yyaction(3, YYlen, YYtcs, YYline) ->
     YYtext = yypre(YYtcs, YYlen),
     S = lists:sublist(YYtext, 2, length(YYtext) - 2),
-    {token,{author,YYline,string_gen(S)}};
+    {token,{calc,YYline,string_gen(S)}};
 yyaction(4, YYlen, YYtcs, YYline) -> skip_token;
 yyaction(5, YYlen, YYtcs, YYline) ->
     {token,{'=',YYline}};
