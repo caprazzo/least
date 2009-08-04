@@ -11,7 +11,7 @@ log(Desc, In, Out) ->
 	Out.
 
 swrap([{calc,_,_}=C1,{oper,_,_}=O,{calc,_,_}=C2]) ->
-	{calc, 1, C1, O, C2}.
+	{calc, 5, C1, O, C2}.
 
 
 
@@ -324,7 +324,7 @@ yeccgoto_list(9, Cat, Ss, Stack, T, Ts, Tzr) ->
 yeccpars2_2_(__Stack0) ->
  [__1 | __Stack] = __Stack0,
  [begin
-   log ( "list->element" , [ __1 ] , __1 )
+   log ( "list->element" , __1 , __1 )
   end | __Stack].
 
 -compile({inline,yeccpars2_7_/1}).
@@ -340,7 +340,7 @@ yeccpars2_7_(__Stack0) ->
 yeccpars2_8_(__Stack0) ->
  [__3,__2,__1 | __Stack] = __Stack0,
  [begin
-   log ( "list->(list)" , [ __1 , __2 , __3 ] , { calc , 5 , __2 } )
+   log ( "list->(list)" , [ __1 , __2 , __3 ] , swrap ( __2 ) )
   end | __Stack].
 
 -compile({inline,yeccpars2_9_/1}).
@@ -348,7 +348,7 @@ yeccpars2_8_(__Stack0) ->
 yeccpars2_9_(__Stack0) ->
  [__2,__1 | __Stack] = __Stack0,
  [begin
-   log ( "list->element list" , [ __1 , __2 ] , [ __1 | __2 ] )
+   log ( "list->element list" , [ __1 , __2 ] , [ __1 ] ++ __2 )
   end | __Stack].
 
 

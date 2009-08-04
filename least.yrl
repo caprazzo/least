@@ -10,13 +10,13 @@ Rootsymbol list.
 %element -> oper : '$1'.
 
 list -> '(' list ')' :
-	log("list->(list)",['$1','$2','$3'], {calc, 5, '$2'}).
+	log("list->(list)",['$1','$2','$3'], swrap('$2')).
 
 list -> element :
-	log("list->element", ['$1'], '$1').
+	log("list->element", '$1', '$1').
 
 list -> element list:
-	log("list->element list", ['$1','$2'], ['$1'|'$2']).
+	log("list->element list", ['$1','$2'], ['$1'] ++ '$2').
 
 %list -> element element list:
 %	log("list->element list", ['$1','$2','$3'],['$1','$2','$3']).
@@ -49,7 +49,7 @@ log(Desc, In, Out) ->
 	Out.
 
 swrap([{calc,_,_}=C1,{oper,_,_}=O,{calc,_,_}=C2]) ->
-	{calc, 1, C1, O, C2}.
+	{calc, 5, C1, O, C2}.
 
 
 
