@@ -1,6 +1,6 @@
 -module(least_parse).
 
--export([make/0, file/1]).
+-export([make/0, file/1, explain/1]).
 
 make() ->
 	yecc:yecc("least", "least_yecc"),
@@ -14,6 +14,34 @@ file(F) ->
     Parse = handle(Stream, 1, [], 0),
     file:close(Stream),
     Parse.
+
+explain(F) ->
+	{ok, [R]} = file(F),
+	io:format("~n~n~p~n~n",[R]),
+	calc(R).
+
+calc({calc, A, B, C}) ->
+	oper(calc(A), calc(B), C);
+	
+calc({calc, A}) ->
+	{data, A, fetch(A)}.
+	
+oper({data, T1, D1},{data, T2, D2},{oper, O}) ->
+	{data, "("++T1++O++T2++")", D1++D2}.
+	
+fetch("radiohead") ->
+	["foo","bar","baz"];
+fetch("queen") ->
+	["oof","rab","zab"];
+fetch("mj") ->
+	["one","two","three"];
+fetch("pink") ->
+	["eno","otw","eerht"];
+fetch("floyd") ->
+	["aaa","bbb","ccc"].
+	
+
+
 
 handle(Stream, LineNo, L, NErrors) ->
     handle1(io:requests(Stream, [{get_until,foo,least_lex,
