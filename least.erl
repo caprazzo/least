@@ -1,9 +1,9 @@
 -module(least).
 -export([parse/1, parse_and_scan/1, format_error/1]).
--file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.yrl", 41).
+-file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 27).
 
-%min({calc, _N, V}) -> {calc, _N, V};
-%min({oper, _N, V}) -> {oper, _N, V};
+min({calc, _N, V}) -> {calc, V};
+min({oper, _N, V}) -> {oper, V};
 min(V) -> V.
 
 log(Desc, In, Out) ->
@@ -16,7 +16,7 @@ swrap([{calc,_,_}=C1,{oper,_,_}=O,{calc,_,_}=C2]) ->
 
 
 
--file("/opt/local/lib/erlang/lib/parsetools-2.0/include/yeccpre.hrl", 0).
+-file("c:/PROGRA~1/ERL57~1.2/lib/parsetools-2.0/include/yeccpre.hrl", 0).
 %%
 %% %CopyrightBegin%
 %% 
@@ -198,7 +198,7 @@ yecctoken2string(Other) ->
 
 
 
--file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.erl", 201).
+-file("C:/Documents and Settings/mcaprari/workspace/least/src/least.erl", 201).
 
 yeccpars2(0=S, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_0(S, Cat, Ss, Stack, T, Ts, Tzr);
@@ -212,14 +212,14 @@ yeccpars2(4=S, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_4(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(5=S, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_5(S, Cat, Ss, Stack, T, Ts, Tzr);
-%% yeccpars2(6=S, Cat, Ss, Stack, T, Ts, Tzr) ->
-%%  yeccpars2_6(S, Cat, Ss, Stack, T, Ts, Tzr);
-%% yeccpars2(7=S, Cat, Ss, Stack, T, Ts, Tzr) ->
-%%  yeccpars2_7(S, Cat, Ss, Stack, T, Ts, Tzr);
-yeccpars2(8=S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_8(S, Cat, Ss, Stack, T, Ts, Tzr);
-%% yeccpars2(9=S, Cat, Ss, Stack, T, Ts, Tzr) ->
-%%  yeccpars2_9(S, Cat, Ss, Stack, T, Ts, Tzr);
+yeccpars2(6=S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_6(S, Cat, Ss, Stack, T, Ts, Tzr);
+yeccpars2(7=S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_7(S, Cat, Ss, Stack, T, Ts, Tzr);
+%% yeccpars2(8=S, Cat, Ss, Stack, T, Ts, Tzr) ->
+%%  yeccpars2_8(S, Cat, Ss, Stack, T, Ts, Tzr);
+yeccpars2(9=S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_9(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(Other, _, _, _, _, _, _) ->
  erlang:error({yecc_bug,"1.3",{missing_state_in_action_table, Other}}).
 
@@ -231,125 +231,89 @@ yeccpars2_0(S, oper, Ss, Stack, T, Ts, Tzr) ->
  yeccpars1(S, 5, Ss, Stack, T, Ts, Tzr).
 
 yeccpars2_1(_S, '$end', _Ss, Stack,  _T, _Ts, _Tzr) ->
- {ok, hd(Stack)};
-yeccpars2_1(S, '(', Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 3, Ss, Stack, T, Ts, Tzr);
-yeccpars2_1(S, calc, Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 4, Ss, Stack, T, Ts, Tzr);
-yeccpars2_1(S, oper, Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 5, Ss, Stack, T, Ts, Tzr).
+ {ok, hd(Stack)}.
 
-yeccpars2_2(S, '(', Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 3, Ss, Stack, T, Ts, Tzr);
-yeccpars2_2(S, calc, Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 4, Ss, Stack, T, Ts, Tzr);
-yeccpars2_2(S, oper, Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 5, Ss, Stack, T, Ts, Tzr);
 yeccpars2_2(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
  NewStack = yeccpars2_2_(Stack),
  yeccgoto_list(hd(Ss), Cat, Ss, NewStack, T, Ts, Tzr).
 
 %% yeccpars2_3: see yeccpars2_0
 
+yeccpars2_4(S, oper, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars1(S, 6, Ss, Stack, T, Ts, Tzr);
 yeccpars2_4(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccgoto_element(hd(Ss), Cat, Ss, Stack, T, Ts, Tzr).
+ NewStack = yeccpars2_4_(Stack),
+ yeccgoto_element(hd(Ss), Cat, Ss, NewStack, T, Ts, Tzr).
 
 yeccpars2_5(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccgoto_element(hd(Ss), Cat, Ss, Stack, T, Ts, Tzr).
+ NewStack = yeccpars2_5_(Stack),
+ yeccgoto_element(hd(Ss), Cat, Ss, NewStack, T, Ts, Tzr).
 
-yeccpars2_6(S, ')', Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 8, Ss, Stack, T, Ts, Tzr);
-yeccpars2_6(S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_0(S, Cat, Ss, Stack, T, Ts, Tzr).
+yeccpars2_6(S, calc, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars1(S, 7, Ss, Stack, T, Ts, Tzr).
 
-yeccpars2_7(S, '(', Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 3, Ss, Stack, T, Ts, Tzr);
-yeccpars2_7(S, calc, Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 4, Ss, Stack, T, Ts, Tzr);
-yeccpars2_7(S, oper, Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 5, Ss, Stack, T, Ts, Tzr);
 yeccpars2_7(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- [_|Nss] = Ss,
+ [_,_|Nss] = Ss,
  NewStack = yeccpars2_7_(Stack),
  yeccgoto_list(hd(Nss), Cat, Nss, NewStack, T, Ts, Tzr).
 
-yeccpars2_8(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- [_,_|Nss] = Ss,
- NewStack = yeccpars2_8_(Stack),
- yeccgoto_list(hd(Nss), Cat, Nss, NewStack, T, Ts, Tzr).
+yeccpars2_8(S, ')', Ss, Stack, T, Ts, Tzr) ->
+ yeccpars1(S, 9, Ss, Stack, T, Ts, Tzr).
 
-yeccpars2_9(S, '(', Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 3, Ss, Stack, T, Ts, Tzr);
-yeccpars2_9(S, calc, Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 4, Ss, Stack, T, Ts, Tzr);
-yeccpars2_9(S, oper, Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 5, Ss, Stack, T, Ts, Tzr);
 yeccpars2_9(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- [_|Nss] = Ss,
+ [_,_|Nss] = Ss,
  NewStack = yeccpars2_9_(Stack),
  yeccgoto_list(hd(Nss), Cat, Nss, NewStack, T, Ts, Tzr).
 
-yeccgoto_element(0, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_2(2, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_element(1, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_2(2, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_element(2, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_2(2, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_element(3, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_2(2, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_element(6, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_2(2, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_element(7, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_2(2, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_element(9, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_2(2, Cat, Ss, Stack, T, Ts, Tzr).
+yeccgoto_element(0=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_2(_S, Cat, Ss, Stack, T, Ts, Tzr);
+yeccgoto_element(3=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_2(_S, Cat, Ss, Stack, T, Ts, Tzr).
 
 yeccgoto_list(0, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_1(1, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_list(1, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_7(7, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_list(2, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_9(9, Cat, Ss, Stack, T, Ts, Tzr);
 yeccgoto_list(3, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_6(6, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_list(6, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_7(7, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_list(7, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_7(7, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_list(9, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_7(7, Cat, Ss, Stack, T, Ts, Tzr).
+ yeccpars2_8(8, Cat, Ss, Stack, T, Ts, Tzr).
 
 -compile({inline,yeccpars2_2_/1}).
--file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.yrl", 12).
+-file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 11).
 yeccpars2_2_(__Stack0) ->
  [__1 | __Stack] = __Stack0,
  [begin
-   log ( "list->element" , __1 , __1 )
+   log ( "list->element" , __1 , min ( __1 ) )
+  end | __Stack].
+
+-compile({inline,yeccpars2_4_/1}).
+-file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 14).
+yeccpars2_4_(__Stack0) ->
+ [__1 | __Stack] = __Stack0,
+ [begin
+   log ( "element->calc" , __1 , min ( __1 ) )
+  end | __Stack].
+
+-compile({inline,yeccpars2_5_/1}).
+-file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 8).
+yeccpars2_5_(__Stack0) ->
+ [__1 | __Stack] = __Stack0,
+ [begin
+   log ( "element->oper" , __1 , min ( __1 ) )
   end | __Stack].
 
 -compile({inline,yeccpars2_7_/1}).
--file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.yrl", 21).
+-file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 5).
 yeccpars2_7_(__Stack0) ->
- [__2,__1 | __Stack] = __Stack0,
- [begin
-   log ( "list->list list" , [ __1 , __2 ] , [ __1 , __2 ] )
-  end | __Stack].
-
--compile({inline,yeccpars2_8_/1}).
--file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.yrl", 9).
-yeccpars2_8_(__Stack0) ->
  [__3,__2,__1 | __Stack] = __Stack0,
  [begin
-   log ( "list->(list)" , [ __1 , __2 , __3 ] , swrap ( __2 ) )
+   log ( "list->calc oper calc" , [ __1 , __2 , __3 ] , { calc , min ( __1 ) , min ( __3 ) , min ( __2 ) } )
   end | __Stack].
 
 -compile({inline,yeccpars2_9_/1}).
--file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.yrl", 15).
+-file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 17).
 yeccpars2_9_(__Stack0) ->
- [__2,__1 | __Stack] = __Stack0,
+ [__3,__2,__1 | __Stack] = __Stack0,
  [begin
-   log ( "list->element list" , [ __1 , __2 ] , [ __1 ] ++ __2 )
+   log ( "list->(list)" , [ __1 , __2 , __3 ] , __2 )
   end | __Stack].
 
 
--file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.yrl", 56).
+-file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 42).

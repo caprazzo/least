@@ -38,10 +38,16 @@ fetch("mj") ->
 fetch("pink") ->
 	["eno","otw","eerht"];
 fetch("floyd") ->
-	["aaa","bbb","ccc"].
+	["aaa","bbb","ccc"];
 	
-
-
+fetch(Artist) ->
+	case cache:get(Artist) of
+		miss ->
+			Similar = fermal:artist_similar(Artist),
+			cache:put(Artist, Similar);
+		{hit, Similar} ->
+			Similar
+	end.
 
 handle(Stream, LineNo, L, NErrors) ->
     handle1(io:requests(Stream, [{get_until,foo,least_lex,
