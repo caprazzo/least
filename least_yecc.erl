@@ -16,7 +16,7 @@ swrap([{calc,_,_}=C1,{oper,_,_}=O,{calc,_,_}=C2]) ->
 
 
 
--file("c:/PROGRA~1/ERL57~1.2/lib/parsetools-2.0/include/yeccpre.hrl", 0).
+-file("/opt/local/lib/erlang/lib/parsetools-2.0/include/yeccpre.hrl", 0).
 %%
 %% %CopyrightBegin%
 %% 
@@ -240,7 +240,10 @@ yeccpars2_2(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
 %% yeccpars2_3: see yeccpars2_0
 
 yeccpars2_4(S, oper, Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 6, Ss, Stack, T, Ts, Tzr).
+ yeccpars1(S, 6, Ss, Stack, T, Ts, Tzr);
+yeccpars2_4(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ NewStack = yeccpars2_4_(Stack),
+ yeccgoto_element(hd(Ss), Cat, Ss, NewStack, T, Ts, Tzr).
 
 yeccpars2_5(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
  NewStack = yeccpars2_5_(Stack),
@@ -278,6 +281,14 @@ yeccpars2_2_(__Stack0) ->
  [__1 | __Stack] = __Stack0,
  [begin
    log ( "list->element" , __1 , min ( __1 ) )
+  end | __Stack].
+
+-compile({inline,yeccpars2_4_/1}).
+-file("least.yrl", 14).
+yeccpars2_4_(__Stack0) ->
+ [__1 | __Stack] = __Stack0,
+ [begin
+   log ( "element->calc" , __1 , min ( __1 ) )
   end | __Stack].
 
 -compile({inline,yeccpars2_5_/1}).

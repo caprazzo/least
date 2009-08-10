@@ -1,6 +1,6 @@
 -module(least).
 -export([parse/1, parse_and_scan/1, format_error/1]).
--file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 27).
+-file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.yrl", 27).
 
 min({calc, _N, V}) -> {calc, V};
 min({oper, _N, V}) -> {oper, V};
@@ -16,7 +16,7 @@ swrap([{calc,_,_}=C1,{oper,_,_}=O,{calc,_,_}=C2]) ->
 
 
 
--file("c:/PROGRA~1/ERL57~1.2/lib/parsetools-2.0/include/yeccpre.hrl", 0).
+-file("/opt/local/lib/erlang/lib/parsetools-2.0/include/yeccpre.hrl", 0).
 %%
 %% %CopyrightBegin%
 %% 
@@ -198,7 +198,7 @@ yecctoken2string(Other) ->
 
 
 
--file("C:/Documents and Settings/mcaprari/workspace/least/src/least.erl", 201).
+-file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.erl", 201).
 
 yeccpars2(0=S, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_0(S, Cat, Ss, Stack, T, Ts, Tzr);
@@ -276,7 +276,7 @@ yeccgoto_list(3, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_8(8, Cat, Ss, Stack, T, Ts, Tzr).
 
 -compile({inline,yeccpars2_2_/1}).
--file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 11).
+-file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.yrl", 11).
 yeccpars2_2_(__Stack0) ->
  [__1 | __Stack] = __Stack0,
  [begin
@@ -284,7 +284,7 @@ yeccpars2_2_(__Stack0) ->
   end | __Stack].
 
 -compile({inline,yeccpars2_4_/1}).
--file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 14).
+-file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.yrl", 14).
 yeccpars2_4_(__Stack0) ->
  [__1 | __Stack] = __Stack0,
  [begin
@@ -292,7 +292,7 @@ yeccpars2_4_(__Stack0) ->
   end | __Stack].
 
 -compile({inline,yeccpars2_5_/1}).
--file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 8).
+-file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.yrl", 8).
 yeccpars2_5_(__Stack0) ->
  [__1 | __Stack] = __Stack0,
  [begin
@@ -300,7 +300,7 @@ yeccpars2_5_(__Stack0) ->
   end | __Stack].
 
 -compile({inline,yeccpars2_7_/1}).
--file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 5).
+-file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.yrl", 5).
 yeccpars2_7_(__Stack0) ->
  [__3,__2,__1 | __Stack] = __Stack0,
  [begin
@@ -308,7 +308,7 @@ yeccpars2_7_(__Stack0) ->
   end | __Stack].
 
 -compile({inline,yeccpars2_9_/1}).
--file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 17).
+-file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.yrl", 17).
 yeccpars2_9_(__Stack0) ->
  [__3,__2,__1 | __Stack] = __Stack0,
  [begin
@@ -316,4 +316,4 @@ yeccpars2_9_(__Stack0) ->
   end | __Stack].
 
 
--file("C:/Documents and Settings/mcaprari/workspace/least/src/least.yrl", 42).
+-file("/Users/dikappa/Documents/workspace-semgraph/least/src/least.yrl", 42).

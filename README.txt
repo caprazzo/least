@@ -180,3 +180,25 @@ LAST:
        	]
 	]
 }
+
+Proplist: [{"name",<<"Traveling Wilburys">>},
+           {"mbid",<<"4387b544-e4d0-4f18-b74e-d4a5ba1582ab">>},
+           {"match",<<"6.9">>},
+           {"url",<<"www.last.fm/music/Traveling+Wilburys">>},
+           {"image",
+            [{obj,[{"#text",
+                    <<"http://userserve-ak.last.fm/serve/34/2245094.jpg">>},
+                   {"size",<<"small">>}]},
+             {obj,[{"#text",
+                    <<"http://userserve-ak.last.fm/serve/64/2245094.jpg">>},
+                   {"size",<<"medium">>}]},
+             {obj,[{"#text",
+                    <<"http://userserve-ak.last.fm/serve/126/2245094.jpg">>},
+                   {"size",<<"large">>}]},
+             {obj,[{"#text",
+                    <<"http://userserve-ak.last.fm/serve/252/2245094.jpg">>},
+                   {"size",<<"extralarge">>}]},
+             {obj,[{"#text",
+                    <<"http://userserve-ak.last.fm/serve/500/2245094/Traveling+Wilburys.jpg">>},
+                   {"size",<<"mega">>}]}]},
+           {"streamable",<<"1">>}]
