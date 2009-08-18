@@ -5,7 +5,8 @@
 make() ->
 	yecc:yecc("least", "least_yecc"),
 	{ok, least_yecc} = c:c(least_yecc),
-	leex:gen(least, least_lex),
+	leex:file(least_lex),
+	%leex:file(least)
 	{ok, least_lex} = c:c(least_lex).
 	
 string(S) ->
