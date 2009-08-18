@@ -5,35 +5,54 @@
 -export([start/0,stop/0, dispatch_requests/1]).
 
 start() ->
+	process_flag(trap_exit, true),
 	least_resolver:start_link(),
+	inets:start(),
 	mochiweb_http:start([{port, 4321}, {loop, fun dispatch_requests/1}]).
 
 stop() ->
   mochiweb_http:stop().
 
-dispatch_requests(HttpRequest) ->
-	{Action,_,_}=P = mochiweb_util:urlsplit_path(HttpRequest:get(path)),
+dispatch_requests(Req) ->
+	Params = Req:parse_qs(),
+	Formula = proplists:get_value("formula", Params),
+	Path = Req:get(path),
+	%Rq = re:split(Path, "/formula/", [{return,list}]),
+	io:format("SPLIT: ~p~n", [Formula]),
+	handle(Formula, Req).
+
+handle(undefined, HttpRequest) ->
+	{ok, Index} = file:read_file("index.html"),
+	HttpRequest:respond({200, [{"Content-Type", "text/html"}], Index});
+
+handle(Formula, HttpRequest) ->
+	io:format("Formula:~p~n",[Formula]),
+	{data, Formula, Result} = resolve(Formula),
+	HttpRequest:respond({200, [{"Content-Type", "text/javascript"}], response_json(Result)});
+
+handle(Unknown, Req) ->
+  Req:respond({404, [{"Content-Type", "text/plain"}], subst("Unknown action: ~s", [Unknown])}).
+
+handle("/formula", Path, HttpRequest) ->
 	{ok, RE} = re:compile("/formula/"),
-	[_, Formula] = re:split(Action, RE),
-	io:format("P:~p J:~p ~n",[P, binary_to_list(Formula)]),
-	F = binary_to_list(Formula),
-	{data, F, Result} = resolve(binary_to_list(Formula)),
-	HttpRequest:respond({200, [{"Content-Type", "text/plain"}], mochijson2:encode(Result)}).
+	[_, Formula] = re:split(Path, RE),
+	io:format("Action: ~p~n",[Path]),
+	{data, Formula, Result} = resolve(Formula),
+	HttpRequest:respond({200, [{"Content-Type", "text/plain"}], response_json(Result)}).
+
+response_json(Result) ->
+	Rt = lists:foldl(fun(Artist, Acc) -> [{struct, minimize_artist(Artist)}|Acc] end, [], Result),
+	iolist_to_binary(mochijson2:encode(Rt)).
+
+minimize_artist({Name, {artist, Props}}) ->
+	[{name, Name},
+	 {mbid, proplists:get_value("mbid", Props)},
+	 {url, proplists:get_value("url", Props)}].
 
 resolve(Formula) ->
 	{ok, Expression} = least_parse:string(Formula),
 	Result = least_resolver:resolve(Expression),
-	io:format("Result: ~p~n",[Result]),
 	Result.
-
-handle("/formula/", Req) ->
-  Params = Req:parse_qs(),
-  Nick = proplists:get_value("nick", Params),
-  mucc:crash(Nick),
-  success(Req, ?OK);
-
-handle(Unknown, Req) ->
-  Req:respond({404, [{"Content-Type", "text/plain"}], subst("Unknown action: ~s", [Unknown])}).
 
 error(Req, Body) when is_binary(Body) ->
   Req:respond({500, [{"Content-Type", "text/plain"}], Body}).
@@ -51,3 +70,6 @@ clean_path(Path) ->
     N ->
       string:substr(Path, 1, string:len(Path) - (N + 1))
   end.
+
+dump_data(Path, Data) ->
+	file:write_file(Path,io_lib:fwrite("~p.\n",[Data])).

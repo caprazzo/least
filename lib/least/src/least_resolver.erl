@@ -18,7 +18,7 @@ init([]) ->
 	{ok, lru_cache:new(?MODULE, MaxSize, MaxAge)}.
 
 resolve(Expression) ->
-	io:format("~p:resolve(~p)", [?MODULE, Expression]),
+	io:format("~p:resolve(~p)~n", [?MODULE, Expression]),
 	gen_server:call(?MODULE, {expression, Expression}).
 
 terminate(_Reason, _State) ->
@@ -33,38 +33,43 @@ calc({calc, A, B, C}, Cache) ->
 calc({calc, A}, Cache) ->
 	{data, A, fetch(A, Cache)}.
 	
-oper({data, T1, D1},{data, T2, D2},{oper, O}) ->
-	{data, "("++T1++O++T2++")", D1++D2}.
+oper({data, T1, D1}, {data, T2, D2}, {oper, "+"=O}) ->
+	{data, "("++T1++O++T2++")", union(D1,D2) };
 
-oper({data, T1, D1}, {data, T2, D2}, {oper, "+"}) ->
-	{data, "("++T1++O++T2++")", D1++D2}.
+oper({data, T1, D1}, {data, T2, D2}, {oper, "/"=O}) ->
+	io:format(" INTERSECTION ~p / ~p~n",[T1,T2]),
+	{data, "("++T1++O++T2++")", intersection(D1, D2)};
 
-oper({data, T1, D1}, {data, T2, D2}, {oper, "-"}) ->
-	{data, "("++T1++O++T2++")", D1--D2}.
+oper({data, T1, D1}, {data, T2, D2}, {oper, "-"=O}) ->
+	{data, "("++T1++O++T2++")", disjoint(D1, D2)}.
 
-as_names([], Acc) ->
-	lists:reverse(Acc);
-as_names([{artist, Proplist}|Artists], Acc) ->
-	as_names(Artists, [proplists:get_value("name", Proplist)|Acc]).
+%% union uses an ets set to build a list of unique 
+%% artists. Not best approach, but quick and dirty.
+union(D1, D2) ->
+	Ex = ets:new(union, [set,private]),
+	ets:insert(Ex, D1 ++ D2),
+	R = ets:tab2list(Ex),
+	ets:delete(Ex),
+	R.
+
+intersection(D1, D2) ->
+	{Names2, _} = lists:unzip(D2),
+	lists:filter(fun({Name, _Data}) -> lists:member(Name, Names2) end, D1).
+
+disjoint(D1, D2) ->
+	{Names2, _} = lists:unzip(D2),
+	lists:filter(fun({Name, _Data}) -> case lists:member(Name, Names2) of true -> false; false-> true end end, D1).
 
 fetch(Artist, Cache) ->
 	case Cache:get(Artist) of
 		miss ->
-			Similar = fermal:artist_similar(Artist),
+			Similar = index(lists:sublist(fermal:artist_similar( edoc_lib:escape_uri(Artist)), 3),[]),
 			Cache:put(Artist, Similar),
 			Similar;
 		{hit, Similar} ->
 			Similar
 	end.
 
-get_artist_list([], Acc) ->
-  	lists:reverse(Acc);
-get_artist_list([{artist, Proplist}|Artists], Acc) ->
-	io:format("Proplist: ~p~n",[Proplist]),
-	get_artist_list(Artists, [
-			{struct, [
-				{"name", proplists:get_value("name", Proplist)},
-			 	{"match",proplists:get_value("match", Proplist)},
-				{"url", proplists:get_value("url", Proplist)}
-			]}|Acc]).
-
+index([], Acc) -> Acc;
+index([{artist, Props}|Artists], Acc) ->
+	index(Artists, [{proplists:get_value("name", Props), {artist, Props}}|Acc]).
