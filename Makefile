@@ -4,7 +4,7 @@ CACHE_LIB=lib/cache
 MOCHIWEB_LIB=lib/mochiweb
 
 libs:
-	cd $(LEAST_LIB) && erl -make && cd - && \
+	cd $(LEAST_LIB) && make && cd - && \
 	cd $(FERMAL_LIB) && erl -make && cd - && \
 	cd $(CACHE_LIB) && erl -make && cd - && \
 	cd $(MOCHIWEB_LIB) && make

@@ -27,18 +27,11 @@ handle(undefined, HttpRequest) ->
 
 handle(Formula, HttpRequest) ->
 	io:format("Formula:~p~n",[Formula]),
-	{data, Formula, Result} = resolve(Formula),
+	{data, ResolvedFormula, Result} = resolve(Formula),
 	HttpRequest:respond({200, [{"Content-Type", "text/javascript"}], response_json(Result)});
 
 handle(Unknown, Req) ->
   Req:respond({404, [{"Content-Type", "text/plain"}], subst("Unknown action: ~s", [Unknown])}).
-
-handle("/formula", Path, HttpRequest) ->
-	{ok, RE} = re:compile("/formula/"),
-	[_, Formula] = re:split(Path, RE),
-	io:format("Action: ~p~n",[Path]),
-	{data, Formula, Result} = resolve(Formula),
-	HttpRequest:respond({200, [{"Content-Type", "text/plain"}], response_json(Result)}).
 
 response_json(Result) ->
 	Rt = lists:foldl(fun(Artist, Acc) -> [{struct, minimize_artist(Artist)}|Acc] end, [], Result),

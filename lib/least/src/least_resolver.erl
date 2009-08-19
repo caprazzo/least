@@ -18,7 +18,6 @@ init([]) ->
 	{ok, simple_cache:new([{max_count,MaxCount}, {max_age, MaxAge}])}.
 
 resolve(Expression) ->
-	io:format("~p:resolve(~p)~n", [?MODULE, Expression]),
 	gen_server:call(?MODULE, {expression, Expression}).
 
 terminate(_Reason, _State) ->
@@ -34,6 +33,7 @@ calc({calc, A}, Cache) ->
 	{data, A, fetch(A, Cache)}.
 	
 oper({data, T1, D1}, {data, T2, D2}, {oper, "+"=O}) ->
+	io:format(" UNION ~p + ~p~n",[T1,T2]),
 	{data, "("++T1++O++T2++")", union(D1,D2) };
 
 oper({data, T1, D1}, {data, T2, D2}, {oper, "/"=O}) ->
@@ -41,6 +41,7 @@ oper({data, T1, D1}, {data, T2, D2}, {oper, "/"=O}) ->
 	{data, "("++T1++O++T2++")", intersection(D1, D2)};
 
 oper({data, T1, D1}, {data, T2, D2}, {oper, "-"=O}) ->
+	io:format(" DISJOINT ~p - ~p~n",[T1,T2]),
 	{data, "("++T1++O++T2++")", disjoint(D1, D2)}.
 
 %% union uses an ets set to build a list of unique 
@@ -63,7 +64,7 @@ disjoint(D1, D2) ->
 fetch(Artist, Cache) ->
 	case Cache:get(Artist) of
 		miss ->
-			Similar = index(lists:sublist(fermal:artist_similar( edoc_lib:escape_uri(Artist)), 3),[]),
+			Similar = index(lists:sublist(fermal:artist_similar( edoc_lib:escape_uri(Artist)), 20),[]),
 			Cache:put(Artist, Similar),
 			Similar;
 		{hit, Similar} ->

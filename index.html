@@ -6,29 +6,51 @@
 			$(function() {
 				$('#formula-form').submit(function() {
 					$('#result').html('');
+					$('#loading').show();
 					$.ajax({
 						data: {'formula': $('#formula').val()},
 						dataType:"json",
 						success: function(data) {
+							$('#loading').hide();
 							if(!data || !data.length) {
 								$('#result').append('<div>no data</div>');
 							}
 							$.each(data, function(i, element) {
 								$('#result').append('<div>'+element.name+'</div>');
 							});
+						},
+						error: function() {
+							$('#result').append('<div>error</div>');
 						}
 					});
 					return false;
 				});
 			});
 		</script>
+		<style type="text/css">
+			body, * {
+				font-family: monospace;
+			}
+			#loading {
+				display:none;
+			}
+			.formula-input {
+				width: 40em;
+				font-size: 120%;
+				border:0;
+				border-bottom: 1px dashed gray;
+			}
+			.formula-button {
+				font-size: 120%;
+			}
+		</style>
 	</head>
 	<body>
 		<form id="formula-form">
-			<input type="text" id="formula" name="formula" value="(radiohead+beck)"/>
-			<input type="submit" value="submit"/>
+			<input class="formula-input" type="text" id="formula" name="formula" value="radiohead - (thom yorke + Jonny Greenwood)"/>
+			<input class="formula-button" type="submit" value="submit"/>
 		</form>
-		
+		<div id="loading">Processing...</div>
 		<div id="result"></div>
 	</body>
 </html>
