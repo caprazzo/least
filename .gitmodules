@@ -1,0 +1,3 @@
+[submodule "fermal"]
+	path = lib/fermal
+	url = git@github.com:mcaprari/fermal.git
