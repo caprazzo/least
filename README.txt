@@ -1,204 +1,40 @@
-{ok,[
-		[
-			[{fetch,"['queen','mickael jackson',-]"}, nil],
-			[
-				{oper,1,"+"},
-				[
-					[{fetch,"['radiohead','beck',-]"},nil],
-				nil
-			]
-		]
-	]
-]
-}
+Meex - Last.fm extended API
 
-{ok,[	
-		{
-			{
-				{artist,"queen"},
-				{
-					{oper,1,"-"},
-					{artist,"mickael jackson"}
-				}
-			},
-			{
-				{oper,1,"+"},
-				{
-					{artist,"radiohead"},
-					{
-						{oper,1,"-"},
-						{artist,"beck"}
-					}
-				}
-			}
-		}
-	]
-}
+artist.meex
+-----------
+Get artists by formula
 
-{ok,[	
-		{calc,
-			{calc, {calc,"queen"}, {oper,"-"}, {calc,"mickael jackson"}},
-			{oper,"+"},
-			{calc, {calc,"radiohead"}, {oper,"-"}, {calc,"beck"}}
-		}
-	]
-}
+e.g. http://least.folli.es/2.0/?method=artist.meex&formula=asf:radiohead^thom yorke&api_key=... 
 
+Params:
+	formula (Required): The formula in question
+	api_key (Required): a Meex api key (not really _required_ for the time being, but expect it to be)
+	limit (Optional): limit the number of artists returned
+		
+		
+FORMULAS
+========
 
-{ok,[
-		{
-			{calc,
-				{calc,1,"queen"},
-				{oper,1,"-"},
-				{calc,1,"mickael jackson"}
-			},
-			{oper,1,"+"},
-			{calc,
-				{calc,1,"radiohead"},
-				{oper,1,"-"},
-				{calc,1,"beck"}
-			}
-		}
-	]
-}
+Artist Similarity Formula (asf:)
+--------------------------------
+Select a set of artists by their similarities with other artists
 
-% PARSE GOAL:
-% {ok,[	
-%		{calc,
-%			{calc, {calc,"queen"}, {oper,"-"}, {calc,"mickael jackson"}},
-%			{oper,"+"},
-%			{calc, {calc,"radiohead"}, {oper,"-"}, {calc,"beck"}}
-%		}
-%	]
-%}
+* union:
+	artist1 * artist2 
+	Set of artists similar to artist1 OR artist2 (OR both)
+	Example:
+		thom yorke * jonny greenwood
+	
+^ intersection:
+	artist1 ^ artist2
+	Set of artists similar to artist1 AND artist2
+	Example:
+		thom yorke ^ jonny greenwood
+	
+- difference
+	artist1 - artist2
+	Set of artists similar to artist1 BUT NOT similar to artist2
+	Example:
+		radiohead - thom yorke
 
-LAST:
-{ok,[
-		{calc,
-			{calc, {calc,"queen"}, {oper,"-"}, {calc,"mickael jackson"}},
-			{oper,"+"},
-			{calc,{calc,"radiohead"},{oper,"-"},{calc,"beck"}}
-		}
-	]
-}
-		   
-
-{ok,[
-		{calc,
-			{calc,{calc,1,"queen"}, {oper,1,"-"}, {calc,1,"mickael jackson"}},
-			{oper,1,"+"},
-			{calc, {calc,1,"radiohead"}, {oper,1,"-"}, {calc,1,"beck"}}
-		}
-	]
-}
-
-{ok,[
-		[
-			{calc,
-				{
-					{calc,1,"queen"},{oper,1,"-"}, {calc,1,"mickael jackson"}
-				}
-			},
-			[
-				{oper,1,"+"},
-				{calc, 
-					{
-						{calc,1,"radiohead"},
-						{oper,1,"-"},
-						{calc,1,"beck"}
-					}
-				}
-			]
-		]
-	]
-}
-
-{ok,[
-		[
-			{calc,2,
-				{calc,1,"queen"},{oper,1,"-"},{calc,1,"mj"}
-			},
-      		[
-      			[
-      				{oper,1,"+"}
-      			],
-       			{calc,2,
-       				{calc,1,"pink"},{oper,1,"-"},{calc,1,"floyd"}
-       			}
-       		]
-       	]
-	]
-}
-
-{ok,[
-		[
-			{calc,2,
-				{calc,1,"queen"},{oper,1,"-"},{calc,1,"mj"}
-			},
-      		[
-      			{oper,1,"+"},
-       			{calc,2,
-       				{calc,1,"pink"},{oper,1,"-"},{calc,1,"floyd"}
-       			}
-       		]
-       	]
-	]
-}
-
-{ok,[
-		[
-			{calc,2,
-				{calc,1,"queen"},{oper,1,"-"},{calc,1,"mj"}
-			},
-   			{oper,1,"+"}|
-   			{calc,2,
-   				{calc,1,"pink"},{oper,1,"-"},{calc,1,"floyd"}
-   			}
-   		]
-   	]
-   }
-
-((queen-mj)+(pink-floyd))
-
-{calc, {calc}, {op}, {calc}}
-
-{calc, 1 {
-	{calc, {calc, 1, "queen"},{oper,1,"-"},{calc,1,"mj"}},
-	{oper, 1, "+"}
-	{calc, {calc, 1, "pink"}, {oper,1,"-"},{calc,1,"floyd"}}
-}
-
-{ok,[
-		[
-			[
-				{calc,1,"queen"},{oper,1,"-"},{calc,1,"mj"}
-			],
-      		[
-      			{oper,1,"+"}, {calc,1,"pink"}, {oper,1,"-"},
-       			{calc,1,"floyd"}
-       		]
-       	]
-	]
-}
-
-Proplist: [{"name",<<"Traveling Wilburys">>},
-           {"mbid",<<"4387b544-e4d0-4f18-b74e-d4a5ba1582ab">>},
-           {"match",<<"6.9">>},
-           {"url",<<"www.last.fm/music/Traveling+Wilburys">>},
-           {"image",
-            [{obj,[{"#text",
-                    <<"http://userserve-ak.last.fm/serve/34/2245094.jpg">>},
-                   {"size",<<"small">>}]},
-             {obj,[{"#text",
-                    <<"http://userserve-ak.last.fm/serve/64/2245094.jpg">>},
-                   {"size",<<"medium">>}]},
-             {obj,[{"#text",
-                    <<"http://userserve-ak.last.fm/serve/126/2245094.jpg">>},
-                   {"size",<<"large">>}]},
-             {obj,[{"#text",
-                    <<"http://userserve-ak.last.fm/serve/252/2245094.jpg">>},
-                   {"size",<<"extralarge">>}]},
-             {obj,[{"#text",
-                    <<"http://userserve-ak.last.fm/serve/500/2245094/Traveling+Wilburys.jpg">>},
-                   {"size",<<"mega">>}]}]},
-           {"streamable",<<"1">>}]
+	

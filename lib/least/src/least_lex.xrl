@@ -4,7 +4,7 @@ Dig = [0-9]
 Big = [A-Z]
 Small = [a-z]
 Char = [A-Za-z0-9]
-All = [A-Za-z0-9\000-\s]
+All = [A-Za-z0-9\000-\s\.]
 WS = [\000-\s]
 Oper = [-+/]
 
