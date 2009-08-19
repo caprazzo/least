@@ -16,3 +16,15 @@ run:
 		-pa $(CACHE_LIB)/ebin \
 		-boot start_sasl \
 		-s least start
+		
+srv:
+	erl -pa $(MOCHIWEB_LIB)/ebin \
+		-pa $(LEAST_LIB)/ebin \
+		-pa $(FERMAL_LIB)/ebin \
+		-pa $(CACHE_LIB)/ebin \
+		-boot start_sasl \
+		-noshell \
+		-detached \
+		-s least start
+		
+		
