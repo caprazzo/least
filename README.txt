@@ -4,8 +4,6 @@ artist.meex
 -----------
 Get artists by formula
 
-e.g. http://meex.folli.es/2.0/artists?formula=asf:radiohead^thom yorke&api_key=... 
-
 http://meex.folli.es/2.0/artists/asf/radiohead*queen/
 
 Params:
@@ -22,7 +20,7 @@ Url is last.fm info page on the artist
 FORMULAS
 ========
 
-Artist Similarity Formula (asf:)
+Artist Similarity Formula (asf)
 --------------------------------
 Select a set of artists by their similarities with other artists
 
@@ -48,6 +46,6 @@ Multiple operations can be combined in a single formula, using parenthesis:
 
 	radiohead - (thom yorke * jonny greenwood)
 	
-	(R.E.M + U2) / (Pearl Jam + Coldplay)
+	(R.E.M * U2) ^ (Pearl Jam * Coldplay)
 
 	
