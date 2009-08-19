@@ -1,3 +1,6 @@
 [submodule "fermal"]
 	path = lib/fermal
 	url = git@github.com:mcaprari/fermal.git
+[submodule "lib/cache"]
+	path = lib/cache
+	url = git@github.com:mcaprari/simple_erlang_lru_cache.git

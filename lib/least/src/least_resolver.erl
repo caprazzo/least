@@ -13,9 +13,9 @@ start_link() ->
 init([]) ->
 	process_flag(trap_exit, true),
 	fermal:start(),
-	MaxSize = 100,
+	MaxCount = 100,
 	MaxAge = 6000,
-	{ok, lru_cache:new(?MODULE, MaxSize, MaxAge)}.
+	{ok, simple_cache:new([{max_count,MaxCount}, {max_age, MaxAge}])}.
 
 resolve(Expression) ->
 	io:format("~p:resolve(~p)~n", [?MODULE, Expression]),
