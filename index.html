@@ -8,7 +8,7 @@
 					$('#result').html('');
 					$('#loading').show();
 					$.ajax({
-						data: {'formula': $('#formula').val()},
+						url: '/2.0/artists/asf/' + encodeURIComponent($('#formula').val()),
 						dataType:"json",
 						success: function(data) {
 							$('#loading').hide();
@@ -47,7 +47,7 @@
 	</head>
 	<body>
 		<form id="formula-form">
-			<input class="formula-input" type="text" id="formula" name="formula" value="radiohead - (thom yorke + Jonny Greenwood)"/>
+			<input class="formula-input" type="text" id="formula" name="formula" value="radiohead - (thom yorke * Jonny Greenwood)"/>
 			<input class="formula-button" type="submit" value="submit"/>
 		</form>
 		<div id="loading">Processing...</div>

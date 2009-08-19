@@ -32,11 +32,11 @@ calc({calc, A, B, C}, Cache) ->
 calc({calc, A}, Cache) ->
 	{data, A, fetch(A, Cache)}.
 	
-oper({data, T1, D1}, {data, T2, D2}, {oper, "+"=O}) ->
+oper({data, T1, D1}, {data, T2, D2}, {oper, "*"=O}) ->
 	io:format(" UNION ~p + ~p~n",[T1,T2]),
 	{data, "("++T1++O++T2++")", union(D1,D2) };
 
-oper({data, T1, D1}, {data, T2, D2}, {oper, "/"=O}) ->
+oper({data, T1, D1}, {data, T2, D2}, {oper, "^"=O}) ->
 	io:format(" INTERSECTION ~p / ~p~n",[T1,T2]),
 	{data, "("++T1++O++T2++")", intersection(D1, D2)};
 

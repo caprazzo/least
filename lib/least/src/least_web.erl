@@ -15,11 +15,22 @@ stop() ->
 
 dispatch_requests(Req) ->
 	Params = Req:parse_qs(),
-	Formula = proplists:get_value("formula", Params),
+	% Formula = proplists:get_value("formula", Params),
 	Path = Req:get(path),
+	case string:str(Path, "/2.0/artists/asf/") of
+		0 -> 
+			{ok, Index} = file:read_file("index.html"),
+			Req:respond({200, [{"Content-Type", "text/html"}], Index});
+		Any ->
+			PathLen = string:len(Path),
+			Formula = re:replace(string:sub_string(Path, string:len("/2.0/artists/asf/")+1),"/$","",[{return,list}]),
+			{data, ResolvedFormula, Result} = resolve(Formula),
+			Req:respond({200, [{"Content-Type", "text/javascript"}], response_json(Result)})
+	end.
+	%io:format("RX:~p~n",[Rx]),
 	%Rq = re:split(Path, "/formula/", [{return,list}]),
-	io:format("SPLIT: ~p~n", [Formula]),
-	handle(Formula, Req).
+	%io:format("SPLIT: ~p~n", [Formula]),
+	%handle(Formula, Req).
 
 handle(undefined, HttpRequest) ->
 	{ok, Index} = file:read_file("index.html"),
@@ -55,6 +66,7 @@ success(Req, Body) when is_binary(Body) ->
 
 subst(Template, Values) when is_list(Values) ->
   list_to_binary(lists:flatten(io_lib:fwrite(Template, Values))).
+
 
 clean_path(Path) ->
   case string:str(Path, "?") of

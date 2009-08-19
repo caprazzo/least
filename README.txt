@@ -4,13 +4,20 @@ artist.meex
 -----------
 Get artists by formula
 
-e.g. http://least.folli.es/2.0/?method=artist.meex&formula=asf:radiohead^thom yorke&api_key=... 
+e.g. http://meex.folli.es/2.0/artists?formula=asf:radiohead^thom yorke&api_key=... 
+
+http://meex.folli.es/2.0/artists/asf/radiohead*queen/
 
 Params:
 	formula (Required): The formula in question
-	api_key (Required): a Meex api key (not really _required_ for the time being, but expect it to be)
-	limit (Optional): limit the number of artists returned
-		
+	
+Response (Json format):
+[
+	{"name": ".....", "mbid":"....", "url":"url"},
+	...
+]
+Name is the artist name,
+Url is last.fm info page on the artist
 		
 FORMULAS
 ========
@@ -36,5 +43,11 @@ Select a set of artists by their similarities with other artists
 	Set of artists similar to artist1 BUT NOT similar to artist2
 	Example:
 		radiohead - thom yorke
+		
+Multiple operations can be combined in a single formula, using parenthesis:
+
+	radiohead - (thom yorke * jonny greenwood)
+	
+	(R.E.M + U2) / (Pearl Jam + Coldplay)
 
 	
