@@ -42,15 +42,23 @@
 			}
 			.formula-button {
 				font-size: 120%;
+				border: 1px solid black;
+				background-color: white;
+			}
+			form {
+				white-space: nowrap;
 			}
 		</style>
 	</head>
 	<body>
+		<div style="color:gray;">Meex. Matteo Caprari + Claudio Martella + Last.FM</div><br/><br/>
 		<form id="formula-form">
 			<input class="formula-input" type="text" id="formula" name="formula" value="radiohead - (thom yorke * Jonny Greenwood)"/>
 			<input class="formula-button" type="submit" value="submit"/>
 		</form>
+		
 		<div id="loading">Processing...</div>
 		<div id="result"></div>
+		
 	</body>
 </html>
